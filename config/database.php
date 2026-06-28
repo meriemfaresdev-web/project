@@ -1,13 +1,14 @@
 <?php
-// إعدادات الاتصال بقاعدة البيانات
-$host = "localhost";
-$db_name = "ecole_formation";
-$username = "root";
-$password = ""; // غالباً خاوية في XAMPP
+// Railway كيعمر هاد المتغيرات تلقائياً أونلاين، وكيقراو localhost ف اللوكال
+$host = getenv('MYSQLHOST') ?: 'localhost';
+$port = getenv('MYSQLPORT') ?: '3306';
+$db_name = getenv('MYSQLDATABASE') ?: 'ecole_formation'; 
+$username = getenv('MYSQLUSER') ?: 'root';
+$password = getenv('MYSQLPASSWORD') ?: ''; // خاوية ف XAMPP
 
 try {
-    // إنشاء اتصال PDO مع إعدادات الحماية واللغة
-    $pdo = new PDO("mysql:host=$host;dbname=$db_name;charset=utf8", $username, $password);
+    // إنشاء اتصال PDO مع زيادة المنفذ (port) حيت Railway كيحتاجو
+    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db_name;charset=utf8", $username, $password);
     
     // تفعيل وضع الأخطاء لإظهار أي مشكل في الـ SQL
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
