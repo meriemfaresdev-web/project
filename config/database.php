@@ -1,20 +1,19 @@
 <?php
-// إذا كنا أونلاين غايتصل بالمعلومات الحقيقية ديال Railway نيشان، وإلا غايخدم بـ localhost
-if (getenv('RAILWAY_ENVIRONMENT') || true) { 
-    $host = 'mysql.railway.internal_proxy.rlwy.net';
-    $port = '3306';
-    $db_name = 'railway'; // اسم الداتابيز أونلاين كيكون هو railway
-    $username = 'root';
-    $password = 'RRSsvCCXrqbvkLEcGSPtaLGEqJiEhgxn';
-}
-
-// هاد الجزء كيبقى للوكال ف XAMPP إذا رجعتي ليه من بعد (تقدري تبدليهم إذا بغيتي)
-if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1') {
+// إعدادات قاعدة البيانات الذكية
+if ($_SERVER['HTTP_HOST'] !== 'localhost' && $_SERVER['HTTP_HOST'] !== '127.0.0.1') {
+    // ---- أونلاين على Railway (الرابط الخارجي العام الصحيح) ----
+    $host = 'roundhouse.proxy.rlwy.net'; 
+    $port = '3306'; // ⚠️ تأكدي فقط من هاد الرقم واش هو اللي عندك ف الـ MYSQLPORT، إلا كان مبدل بدليه
+    $db_name = 'railway';                                 
+    $username = 'root';                                   
+    $password = 'RRSsvCCXrqbvkLEcGSPtaLGEqJiEhgxn'; 
+} else {
+    // ---- لوكال على XAMPP ف الكمبيوتر ----
     $host = '127.0.0.1';
     $port = '3306';
     $db_name = 'ecole_formation';
     $username = 'root';
-    $password = '';
+    $password = ''; 
 }
 
 try {
@@ -25,4 +24,3 @@ try {
     die("خطأ في الاتصال بقاعدة البيانات: " . $e->getMessage());
 }
 ?>
-
